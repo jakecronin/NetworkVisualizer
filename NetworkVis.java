@@ -8,9 +8,17 @@ import java.io.IOException;
 
 //dependenc Stdlib
 //execute NetworkVis.java <txt file> <cycles>
+//Increase performance by removing intermediate draw calls
+//Improve runtime by replacing boolean connections 
+//	-	each node has connections arraylist of type Int pointing to connections
+//	-	connection is singly linked; smaller values contain connections to larger values
+//	-	worst case scenario is still N^2 if each node is connected to every other node, but extremely unlikely
 public class NetworkVis{
 	public static void main(String args[]) throws java.io.FileNotFoundException{
 		if (args == null){
+			System.out.println("Input text file in command line");
+			System.exit(0);
+		}else if (args.size == 0){
 			System.out.println("Input text file in command line");
 			System.exit(0);
 		}
@@ -39,8 +47,6 @@ public class NetworkVis{
 		ArrayList<Node> nodeArray = new ArrayList<Node>();		
 		for (int i = 0; i < size; i++){
 			nodeArray.add(new Node());
-			for (int j = 0; j < size; j++)
-				connect[i][j] = false; //arrays already initialize to false
 		}
 		
 		
@@ -59,12 +65,12 @@ public class NetworkVis{
 				if ((nodeArray.get(i).x > scaleX) || (nodeArray.get(i).x < -scaleX)){
 					scaleX = Math.abs((nodeArray.get(i).x * 1.1));
 					StdDraw.setXscale(-scaleX, scaleX);
-					System.out.println("resizex =");
+					System.out.println("resizex x axis to " + scaleX);
 				}
 				if ((nodeArray.get(i).y > scaleY) || (nodeArray.get(i).y < -scaleY)){
 					scaleY = (nodeArray.get(i).y * 1.1);
 					StdDraw.setYscale(-scaleY, scaleY);
-					System.out.println("resizey =");
+					System.out.println("resizey y axis to "  + scaleY);
 				}
 				drawNode(nodeArray.get(i), scaleX, scaleY);
 				for (int j = i+1; j < size; j++){

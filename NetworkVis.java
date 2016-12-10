@@ -18,7 +18,7 @@ public class NetworkVis{
 		if (args == null){
 			System.out.println("Input text file in command line");
 			System.exit(0);
-		}else if (args.size == 0){
+		}else if (args.length == 0){
 			System.out.println("Input text file in command line");
 			System.exit(0);
 		}
